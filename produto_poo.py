@@ -19,7 +19,7 @@ class Produto:
         return conexao
     
     def cadastrarProduto(self, nome, preco, quantidade_disponivel):
-        conexao = self.conexao() # chamando o método 'conexao' que irá conextar ao banco 
+        conexao = self.conexao() # chamando o método 'conexao' que irá conectar ao banco 
 
         sql = "INSERT INTO produto VALUES(?,?,?,?)" #evitar possiveis ataques de sql injection
 
@@ -59,9 +59,9 @@ class Produto:
         conexao.commit()
 
         if consulta.rowcount > 0:
-            print(f"Produto com código {codigo} deletado com sucesso.")
+            print(f"Produto de código {codigo} deletado com sucesso.")
         else:
-            print(f"Produto com código {codigo} não encontrado.")
+            print(f"Produto de código {codigo} não encontrado.")
 
         conexao.close()
 
@@ -88,12 +88,12 @@ class Produto:
 
         sql = "SELECT * FROM produto WHERE codigo = ?"
 
-        consulta.execute(sql, codigo)
+        consulta.execute(sql, (codigo,))  #codigo em uma tupla
 
-        resultado = consulta.fetchall() #pegando todos os registros da tabela
+        resultado = consulta.fetchall()  #todos os registros da tabela
 
         if resultado:
-            item = resultado[0]  #pega apenas o primeiro registro
+            item = resultado[0]  # pegando apenas o primeiro registro
             print(f"Código: {item[0]}")
             print(f"Nome: {item[1]}")
             print(f"Preço: {item[2]}")
